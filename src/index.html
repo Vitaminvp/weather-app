@@ -8,10 +8,9 @@
     <link href="https://fonts.googleapis.com/css?family=Laila:400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
 
-    <link rel="stylesheet" href="style/normalize.css">
-    <link rel="stylesheet" href="style/grid.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/grid.css">
+    <link rel="stylesheet" href="style/style.scss">
 </head>
 <body>
     <header>
@@ -19,9 +18,6 @@
             <div class="row search">
                 <div class="col-12">
                     <h1>Weather App</h1>
-                </div>
-                <div class="col-2">
-                    <button class="search__star" type="button" title="Add to favorite"><i class="far fa-star"></i></button>
                 </div>
                 <div class="col-8">
                     <label class="search__input_label">
@@ -36,6 +32,9 @@
                             <option value="FA">°F</option>
                         </select>
                     </label>
+                </div>
+                <div class="col-2">
+                    <button class="search__star" type="button" title="Add to favorite"><i class="far fa-star"></i></button>
                 </div>
             </div>
         </div>
@@ -182,5 +181,6 @@
             ❄
         </div>
     </div>
+    <script src="./scripts/index.js"></script>
 </body>
 </html>
