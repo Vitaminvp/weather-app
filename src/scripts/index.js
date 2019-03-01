@@ -1,22 +1,44 @@
 import "babel-polyfill";
-import axios from 'axios';
+import SearchModel from './SearchModel';
+import { elements, renderLoader } from '../data/constants';
+import { CITIES } from '../data/city.min';
+import * as searchView from './SearchView';
 
-import { URL, KEY } from '../constants';
+const state = {};
 
-async function getResults(query){
-    const url = `${URL}${KEY}`;
-    const result = await axios(url);
-    console.log("result", result.data.list);
-}
+const controlSearch = async (value) => {
+    const query = searchView.getInput();
+    if(query){
+        renderLoader(elements.renderItems);
+        state.search = new SearchModel();// передать query
+        await state.search.getResults();
+        console.log(state.search.result);
+        searchView.renderItems(state.search.result.splice(0, 6));
+    }
+};
 
-// function getResults(query){
-//     const url = `${URL}${KEY}`;
-//     fetch(url)
-//         .then(data => data.json())
-//         .then(data => console.log(data.data.list))
-// }
+elements.searchForm
+    .addEventListener('submit',  e => {
+        e.preventDefault();
+        controlSearch();
+        elements.searchList.innerHTML = '';
+    });
 
-getResults();
+elements.searchInput
+    .addEventListener('input',  e => {
+        if(e.target.value.length > 2){
+            searchView.renderMatches(e.target.value, CITIES);
+        } else{
+            elements.searchList.innerHTML = '';
+        }
+    });
 
-console.log("ok~!");
+elements.searchList
+    .addEventListener('click',  e => {
+        if(e.target.classList.contains('search__list_item')){
+            elements.searchInput.value = e.target.innerHTML.trim();
+            elements.searchInput.focus();
+            elements.searchList.innerHTML = '';
+        }
+    });
 

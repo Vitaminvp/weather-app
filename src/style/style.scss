@@ -56,7 +56,9 @@ h1:hover {
     display: flex;
     margin-bottom: 20px;
 }
-
+.search__form{
+    position: relative;
+}
 .search__star,
 .search__input,
 .search__units {
@@ -81,7 +83,8 @@ h1:hover {
 }
 
 .search__star:focus,
-.search__input:focus {
+.search__input:focus,
+.search__units:focus {
     background-color:rgba(255,255,255, .2);
 }
 
@@ -99,8 +102,6 @@ h1:hover {
 .search__input {
     width: 100%;
     flex: 1;
-    margin-right: 5px;
-    margin-left: 5px;
     padding: 0 50px 0 10px;
     outline: none;
     &:after{
@@ -114,6 +115,30 @@ h1:hover {
         content: "\f689";
         color: white;
         margin-right: 10px;
+    }
+}
+.search__list{
+    position: absolute;
+    margin: 0;
+    padding: 0 5px;
+    border-radius: 0 0 4px 4px;
+    list-style-type: none;
+    background-color: #6055cf8f;
+    min-width: 320px;
+    width: 100%;
+    max-height: 50vh;
+    overflow: auto;
+    z-index: 1;
+    & li{
+        background: linear-gradient(to right, #6055cf, transparent);
+        padding: 5px;
+        opacity: 0.6;
+        cursor: pointer;
+        border-radius: 4px;
+        margin: 5px;
+        &:hover{
+            opacity: 1;
+        }
     }
 }
 .search__input:invalid:not(:empty) {
@@ -220,6 +245,7 @@ h1:hover {
 }
 .forecast__date:before,
 .forecast__wind:before,
+.forecast__pressure:before,
 .forecast__humidity:before {
     position: absolute;
     left: 0;
@@ -243,12 +269,20 @@ h1:hover {
     content: "\f72e";
 }
 .forecast__humidity{
+    margin: 0 0 20px 0;
     position: relative;
     padding-left: 30px;
 }
 
 .forecast__humidity:before{
     content: "\f043";
+}
+.forecast__pressure{
+    position: relative;
+    padding-left: 30px;
+}
+.forecast__pressure:before{
+    content: "\f5cd";
 }
 .forecast__img {
     height: 50px;
@@ -307,7 +341,7 @@ h1:hover {
 }
 
 .week__forecast_img {
-    margin: 10px 0;
+    margin: 0;
 }
 
 /* FOOTER FAVORITE AND RECENTLY */
@@ -424,3 +458,10 @@ h1:hover {
     font-family: 'Raleway', sans-serif;
     color: #000;
 }
+::-webkit-scrollbar { width: 3px; height: 3px;}
+::-webkit-scrollbar-button {  background-color: #666; }
+::-webkit-scrollbar-track {  background-color: #999;}
+::-webkit-scrollbar-track-piece { background-color: #ffffff;}
+::-webkit-scrollbar-thumb { height: 50px; background-color: #666; border-radius: 3px;}
+::-webkit-scrollbar-corner { background-color: #999;}
+::-webkit-resizer { background-color: #666;}

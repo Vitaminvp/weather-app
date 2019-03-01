@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
     <link rel="stylesheet" href="style/grid.css">
+    <link rel="stylesheet" href="style/loader.css">
     <link rel="stylesheet" href="style/style.scss">
 </head>
 <body>
@@ -20,9 +21,17 @@
                     <h1>Weather App</h1>
                 </div>
                 <div class="col-8">
-                    <label class="search__input_label">
-                        <input type="text" class="search__input" placeholder="Type location..." required="" autofocus="" autocomplete="off">
-                    </label>
+                    <form action="" class="search__form">
+                        <label class="search__input_label">
+                            <input type="text" class="search__input" placeholder="Type location..." required="" autofocus="" autocomplete="off">
+                        </label>
+                        <ul class="search__list">
+                            <!--<li>test</li>-->
+                            <!--<li>test</li>-->
+                            <!--<li>test</li>-->
+                            <!--<li>test</li>-->
+                        </ul>
+                    </form>
                     <!--<i class="fas fa-search"></i>-->
                 </div>
                 <div class="col-2">
@@ -52,6 +61,7 @@
                                     <time class="forecast__date">2019-02-26</time>
                                     <div class="forecast__wind">Wind 4.42121 m/s</div>
                                     <div class="forecast__humidity">86%</div>
+                                    <div class="forecast__pressure">1017.58 hPa</div>
                                 </div>
                                 <div class="col-4">
                                     <div class="forecast__img"><i class="fas fa-sun"></i></div>
@@ -59,8 +69,8 @@
                                 </div>
                                 <div class="col-4">
                                     <div class="forecast__temperature">
-                                        <div class="forecast__temperature_min"><i class="fas fa-long-arrow-alt-down"></i> 0°</div>
-                                        <div class="forecast__temperature_max"><i class="fas fa-long-arrow-alt-up"></i> 1°</div>
+                                        <div class="forecast__temperature_min"><!--<i class="fas fa-long-arrow-alt-down"></i>--><i class="fas fa-temperature-low"></i> 0°</div>
+                                        <div class="forecast__temperature_max"><!--<i class="fas fa-long-arrow-alt-up"></i>--><i class="fas fa-temperature-high"></i> 1°</div>
                                     </div>
                                     <div class="forecast__temperature_current">1°</div>
                                 </div>
@@ -73,49 +83,49 @@
     </section>
     <section>
         <div class="container">
-            <div class="row">
-                <div class="col-2">
-                    <div class="week__forecast" id="0">
-                        <div class="week__forecast_day">Sun</div>
-                        <div class="week__forecast_img"><i class="fas fa-cloud-sun-rain"></i></div>
-                        <div class="week__forecast_temperature">23°</div>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="week__forecast" id="1">
-                        <div class="week__forecast_day">Mon</div>
-                        <div class="week__forecast_img"><i class="fas fa-cloud-rain"></i></div>
-                        <div class="week__forecast_temperature">24°</div>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="week__forecast" id="2">
-                        <div class="week__forecast_day">Tue</div>
-                        <div class="week__forecast_img"><i class="fas fa-cloud-moon-rain"></i></div>
-                        <div class="week__forecast_temperature">25°</div>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="week__forecast" id="3">
-                        <div class="week__forecast_day">Wed</div>
-                        <div class="week__forecast_img"><i class="fas fa-cloud-meatball"></i></div>
-                        <div class="week__forecast_temperature">26°</div>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="week__forecast" id="4">
-                        <div class="week__forecast_day">Thu</div>
-                        <div class="week__forecast_img"><i class="fab fa-mixcloud"></i></div>
-                        <div class="week__forecast_temperature">27°</div>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="week__forecast" id="5">
-                        <div class="week__forecast_day">Fri</div>
-                        <div class="week__forecast_img"><i class="fas fa-cloud-sun-rain"></i></div>
-                        <div class="week__forecast_temperature">28°</div>
-                    </div>
-                </div>
+            <div class="row renderItems">
+                <!--<div class="col-2">-->
+                    <!--<div class="week__forecast" id="0">-->
+                        <!--<div class="week__forecast_day">Sun</div>-->
+                        <!--<div class="week__forecast_img"><i class="fas fa-cloud-sun-rain"></i></div>-->
+                        <!--<div class="week__forecast_temperature">23°</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-2">-->
+                    <!--<div class="week__forecast" id="1">-->
+                        <!--<div class="week__forecast_day">Mon</div>-->
+                        <!--<div class="week__forecast_img"><i class="fas fa-cloud-rain"></i></div>-->
+                        <!--<div class="week__forecast_temperature">24°</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-2">-->
+                    <!--<div class="week__forecast" id="2">-->
+                        <!--<div class="week__forecast_day">Tue</div>-->
+                        <!--<div class="week__forecast_img"><i class="fas fa-cloud-moon-rain"></i></div>-->
+                        <!--<div class="week__forecast_temperature">25°</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-2">-->
+                    <!--<div class="week__forecast" id="3">-->
+                        <!--<div class="week__forecast_day">Wed</div>-->
+                        <!--<div class="week__forecast_img"><i class="fas fa-cloud-meatball"></i></div>-->
+                        <!--<div class="week__forecast_temperature">26°</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-2">-->
+                    <!--<div class="week__forecast" id="4">-->
+                        <!--<div class="week__forecast_day">Thu</div>-->
+                        <!--<div class="week__forecast_img"><i class="fab fa-mixcloud"></i></div>-->
+                        <!--<div class="week__forecast_temperature">27°</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-2">-->
+                    <!--<div class="week__forecast" id="5">-->
+                        <!--<div class="week__forecast_day">Fri</div>-->
+                        <!--<div class="week__forecast_img"><i class="fas fa-cloud-sun-rain"></i></div>-->
+                        <!--<div class="week__forecast_temperature">28°</div>-->
+                    <!--</div>-->
+                <!--</div>-->
             </div>
         </div>
     </section>
