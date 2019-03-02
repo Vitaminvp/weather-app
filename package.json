@@ -1,0 +1,26 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel -p 7777 src/index.html"
+  },
+  "repository": "https://github.com/Vitaminvp/weather-app.git",
+  "author": "Vitalii Vitaminenko <vitamin@ukr.net>",
+  "license": "MIT",
+  "dependencies": {
+    "autoprefixer": "^9.4.9",
+    "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
+    "normalize.css": "^8.0.1",
+    "postcss-modules": "^1.4.1",
+    "sass": "^1.17.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-proposal-class-properties": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "babel-preset-env": "^1.7.0",
+    "posthtml-img-autosize": "^0.1.3"
+  }
+}
