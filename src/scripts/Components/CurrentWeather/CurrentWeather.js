@@ -4,10 +4,17 @@ import WeatherDataService from "../../../Services/WeatherDataService.js";
 class CurrentWeather extends Component{
     constructor(host) {
         super(host);
+        this.onServerResponse = this.onServerResponse.bind(this);
+        WeatherDataService.subscribeForCurrentWeather(this.onServerResponse);
+        this.state = {};
+    }
+    onServerResponse(weatherData) {
+        this.state.weather = weatherData;
+        console.log("weatherData", this.state.weather);
     }
     render() {
-        const data = WeatherDataService.getCurrentWeather();
-        data.then(data => console.log("CurrentWeather", data));
+        // const data = WeatherDataService.getCurrentWeather();
+        // data.then(data => console.log("CurrentWeather", data));
         return [
             {
                 tag: 'section',
@@ -50,7 +57,7 @@ class CurrentWeather extends Component{
                                                                             {
                                                                                 tag: 'time',
                                                                                 classList: ['forecast__date'],
-                                                                                content: '2019-02-26'
+                                                                                content: '27/12/19'
                                                                             },
                                                                             {
                                                                                 tag: 'div',

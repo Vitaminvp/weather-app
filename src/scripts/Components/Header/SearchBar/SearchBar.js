@@ -1,5 +1,5 @@
 import "babel-polyfill";
-
+// import WeatherDataService from "../../../../Services/WeatherDataService.js";
 import { Component } from "../../../framework";
 import { CITIES } from '../../../../data/city.min';
 
@@ -43,6 +43,8 @@ class SearchBar extends Component{
     };
     handleSubmit(e){
         e.preventDefault();
+        const query = e.target.querySelector('.search__input').value.split(', ')[0];
+
     };
     handleListClick(e){
         if(e.target.classList.contains('search__list_item')){

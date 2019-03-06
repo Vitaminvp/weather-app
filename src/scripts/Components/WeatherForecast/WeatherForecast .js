@@ -6,10 +6,15 @@ import WeatherDataService from "../../../Services/WeatherDataService.js";
 class WeatherForecast extends Component{
     constructor(host) {
         super(host);
+        this.onServerResponse = this.onServerResponse.bind(this);
+        WeatherDataService.subscribeForWeatherForecast(this.onServerResponse);
+    }
+    onServerResponse(weatherData) {
+        // ensure weatherData is properly rendered
     }
     render() {
-        const data = WeatherDataService.getWeatherForecast();
-        data.then(data => console.log("WeatherForecast", data));
+        // const data = WeatherDataService.getWeatherForecast();
+        // data.then(data => console.log("WeatherForecast", data));
         return [
             {
                 tag: 'section',

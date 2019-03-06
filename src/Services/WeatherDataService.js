@@ -3,7 +3,17 @@ import axios from 'axios';
 import { URL1, URL5, KEY } from './constants';
 
 class WeatherDataService{
+    constructor(){
+        this.state = {};
+        this.subscribeForCurrentWeather = this.subscribeForCurrentWeather.bind(this);
+    }
+    subscribeForCurrentWeather(callback){
+        this.getCurrentWeather()
+            .then(callback);
+    }
+    subscribeForWeatherForecast(){
 
+    }
     getCurrentWeather(query = 'Kiev'){
         const url = `${URL1}${query}&appid=${KEY}`;
         return this.getData(url);
