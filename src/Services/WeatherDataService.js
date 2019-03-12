@@ -4,27 +4,28 @@ import { URL1, URL5, KEY } from './constants';
 
 class WeatherDataService{
     constructor(){
-        this.state = {};
-        this.subscribeForCurrentWeather = this.subscribeForCurrentWeather.bind(this);
+        //this.subscribeForCurrentWeather = this.subscribeForCurrentWeather.bind(this);
     }
+
     subscribeForCurrentWeather(callback){
         this.getCurrentWeather()
-            .then(callback);
+            .then(currentWeather => callback({currentWeather}));
     }
-    subscribeForWeatherForecast(){
-
+    subscribeForWeatherForecast(callback){
+        this.getWeatherForecast()
+            .then(weatherForecast => callback({weatherForecast}));
     }
     getCurrentWeather(query = 'Kiev'){
-        const url = `${URL1}${query}&appid=${KEY}`;
-        return this.getData(url);
+        const url = `${URL1}${query}&appid=${KEY}&units=metric`;
+        return this._getData(url);
     }
 
     getWeatherForecast(query = 'London') {
-        const url = `${URL5}${query}&appid=${KEY}`;
-        return this.getData(url);
+        const url = `${URL5}${query}&appid=${KEY}&units=metric`;
+        return this._getData(url);
     }
 
-    async getData(url){
+    async _getData(url){
         try {
             const res = await axios(url);
             return res.data;

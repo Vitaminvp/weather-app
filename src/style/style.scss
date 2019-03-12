@@ -37,6 +37,7 @@ html {
 }
 body{
     padding-top: 2%;
+    text-shadow: 1px 0 1px #000000;
 }
 body::before {
     content: '';
@@ -313,12 +314,11 @@ h1:hover {
     content: "\f5cd";
 }
 .forecast__img {
-    height: 50px;
     text-align: center;
     font-size: 36px;
 }
 .forecast__img img{
-    width: 200px;
+    width: 100px;
 }
 
 .forecast__weather {

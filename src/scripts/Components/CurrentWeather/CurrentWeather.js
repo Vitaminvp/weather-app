@@ -1,20 +1,19 @@
 import {Component} from "../../framework/";
-import WeatherDataService from "../../../Services/WeatherDataService.js";
 
 class CurrentWeather extends Component{
-    constructor(host) {
-        super(host);
-        this.onServerResponse = this.onServerResponse.bind(this);
-        WeatherDataService.subscribeForCurrentWeather(this.onServerResponse);
-        this.state = {};
+    constructor(host, props) {
+        super(host, props);
     }
-    onServerResponse(weatherData) {
-        this.state.weather = weatherData;
-        console.log("weatherData", this.state.weather);
-    }
+
     render() {
-        // const data = WeatherDataService.getCurrentWeather();
-        // data.then(data => console.log("CurrentWeather", data));
+        const date = this.props.dt;
+        const convertData = stringData => {
+            const date = new Date(stringData);
+            console.log("date", date);
+            return new Intl.DateTimeFormat('en-GB').format(date);
+        };
+        const day = new Date(date).getDay();
+        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
         return [
             {
                 tag: 'section',
@@ -36,7 +35,7 @@ class CurrentWeather extends Component{
                                                 tag: 'div',
                                                 classList: ['forecast'],
                                                 children: [
-                                                    {tag: 'h2', classList: ['forecast__city'], content: 'Kiev, UA',},
+                                                    {tag: 'h2', classList: ['forecast__city'], content: `${this.props.name}, ${this.props.sys.country}`},
                                                     {
                                                         tag: 'div',
                                                         classList: ['container'],
@@ -52,27 +51,27 @@ class CurrentWeather extends Component{
                                                                             {
                                                                                 tag: 'div',
                                                                                 classList: ['forecast__day'],
-                                                                                content: 'Tuesday'
+                                                                                content: `${days[day]}`
                                                                             },
                                                                             {
                                                                                 tag: 'time',
                                                                                 classList: ['forecast__date'],
-                                                                                content: '27/12/19'
+                                                                                content: `${convertData(date)}`
                                                                             },
                                                                             {
                                                                                 tag: 'div',
                                                                                 classList: ['forecast__wind'],
-                                                                                content: 'Wind 4.42121 m/s'
+                                                                                content: `Wind ${this.props.wind.speed} m/s`
                                                                             },
                                                                             {
                                                                                 tag: 'div',
                                                                                 classList: ['forecast__humidity'],
-                                                                                content: '86%'
+                                                                                content: `${this.props.main.humidity} %`
                                                                             },
                                                                             {
                                                                                 tag: 'div',
                                                                                 classList: ['forecast__pressure'],
-                                                                                content: '1017.58 hPa'
+                                                                                content: `${this.props.main.pressure} hPa`
                                                                             },
                                                                         ],
                                                                     },
@@ -83,12 +82,12 @@ class CurrentWeather extends Component{
                                                                             {
                                                                                 tag: 'div',
                                                                                 classList: ['forecast__img'],
-                                                                                content: '<i class="fas fa-sun"></i>'
+                                                                                content: `<img  src='http://openweathermap.org/img/w/${this.props.weather[0].icon}.png' alt='${this.props.weather[0].description}' title='${this.props.weather[0].description}' >`
                                                                             },
                                                                             {
                                                                                 tag: 'div',
                                                                                 classList: ['forecast__weather'],
-                                                                                content: '<i class="fas fa-cloud"></i> Overcast clouds'
+                                                                                content: this.props.weather[0].description
                                                                             },
                                                                         ],
                                                                     },
@@ -103,20 +102,19 @@ class CurrentWeather extends Component{
                                                                                     {
                                                                                         tag: 'div',
                                                                                         classList: ['forecast__temperature_min'],
-                                                                                        content: '<i class="fas fa-temperature-low"></i> 0°'
+                                                                                        content: `<i class="fas fa-temperature-low"></i> ${this.props.main.temp_min}°`
                                                                                     },
                                                                                     {
                                                                                         tag: 'div',
                                                                                         classList: ['forecast__temperature_max'],
-                                                                                        content: '<i class="fas fa-temperature-high"></i> 1°'
+                                                                                        content: `<i class="fas fa-temperature-high"></i> ${this.props.main.temp_max}°`
                                                                                     },
                                                                                 ]
                                                                             },
                                                                             {
                                                                                 tag: 'div',
                                                                                 classList: ['forecast__temperature_current'],
-                                                                                content: '1°'
-                                                                            },
+                                                                                content: `${this.props.main.temp.toFixed(1)}°`                                                                          },
                                                                         ],
                                                                     }
                                                                 ],

@@ -3,12 +3,18 @@ class Component{
     constructor(host, props = {}){
         this.host = host;
         this.props = props;
+        this.state = {};
+        this.bindBeforeRender();
         this._render();
     }
+
+    bindBeforeRender(){}
+    updateState(){}
+
     _render(){
         this.host.innerHTML = '';
         let content = this.render();
-        if(typeof content === 'string'){
+        if(!Array.isArray(content)){
             content = [content];  // this.host.innerHTML = content;
         }
         content.map(item => this._vDomPrototypeElementToHtmlElement(item)) // [string|HTMLElement] => [HTMLElement]
@@ -61,7 +67,6 @@ class Component{
 
                     if(element.eventHandler){
                         element.eventHandler.forEach(item => {
-                            console.log("item", item);
                             container.addEventListener(item.eventType, item.handler);
                         });
 

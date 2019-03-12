@@ -2,10 +2,13 @@ import {Component} from "../../../framework/";
 
 
 class WeatherForecastItem extends Component{
-    constructor(host) {
-        super(host);
+    constructor(host, props) {
+        super(host, props);
     }
     render() {
+        const item = this.props.item;
+        const day = new Date(item.dt_txt).getDay();
+        const days = ['Sun','Mon','Tues','Wed','Thurs','Fri','Sat'];
         return [
             {
                 tag: 'div',
@@ -14,22 +17,22 @@ class WeatherForecastItem extends Component{
                     {
                         tag: 'div',
                         classList: ['week__forecast'],
-                        attributes: {name: 'id', value: '01'},
+                        attributes: {name: 'id', value: this.props.item.dt},
                         children: [
                             {
                                 tag: 'div',
                                 classList: ['week__forecast_day'],
-                                content: 'Sun'
+                                content: `${days[day]}`
                             },
                             {
                                 tag: 'div',
                                 classList: ['week__forecast_img'],
-                                content: '<i class="fas fa-cloud-sun-rain"></i>'
+                                content: `<img  src="http://openweathermap.org/img/w/${item.weather[0].icon}.png" alt="${item.weather[0].description}" title="${item.weather[0].description}" >`//'<i class="fas fa-cloud-sun-rain"></i>'
                             },
                             {
                                 tag: 'div',
                                 classList: ['week__forecast_temperature'],
-                                content: '23°'
+                                content: `${this.props.item.main.temp.toFixed(1)}°`
                             },
                         ]
                     },
