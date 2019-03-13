@@ -57,8 +57,10 @@ class SearchBar extends Component{
     handleListClick(e){
         if(e.target.classList.contains('search__list_item')){
             const input = e.target.closest('.search__form').querySelector('.search__input');
-            input.value = e.target.innerHTML.trim();
+            const query = e.target.innerHTML.trim();
+            input.value = query;
             input.focus();
+            this.props.onFormSubmit(query.split(', '));
             e.target.parentNode.innerHTML = '';
         }
     }

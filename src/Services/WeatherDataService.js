@@ -18,14 +18,14 @@ class WeatherDataService{
     getCurrentWeather(query = ['Kiev', 'UA']){
         const city = query[0];
         const code = query[1];
-        const url = `${URL1}${city},${code}&appid=${KEY}&units=metric`;
+        const url = `${URL1}${city},${code?code:''}&appid=${KEY}&units=metric`;
         return this._getData(url);
     }
 
-    getWeatherForecast(query = ['London', 'GB']) {
+    getWeatherForecast(query = ['Kiev', 'UA']) {
         const city = query[0];
         const code = query[1];
-        const url = `${URL5}${city},${code}&appid=${KEY}&units=metric`;
+        const url = `${URL5}${city},${code?code:''}&appid=${KEY}&units=metric`;
         return this._getData(url);
     }
 

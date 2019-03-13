@@ -5,7 +5,7 @@ export const KEY = 'e17681c6b25cbaab506757b3f0966598';
 
 export const convertToData = stringData => {
     const date = new Date(stringData);
-    return new Intl.DateTimeFormat('en-GB').format(date);
+    return new Intl.DateTimeFormat('en-GB').format(date*1000);
 };
 
 export const convertToDay = (msData, format='short') => {
