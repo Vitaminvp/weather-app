@@ -1,14 +1,12 @@
 import {Component} from "../../../framework/";
-
+import {convertToDay} from "../../../../Services/constants";
 
 class WeatherForecastItem extends Component{
     constructor(host, props) {
         super(host, props);
     }
     render() {
-        const item = this.props.item;
-        const day = new Date(item.dt_txt).getDay();
-        const days = ['Sun','Mon','Tues','Wed','Thurs','Fri','Sat'];
+        const {dt, main, weather} = this.props.item;
         return [
             {
                 tag: 'div',
@@ -17,22 +15,22 @@ class WeatherForecastItem extends Component{
                     {
                         tag: 'div',
                         classList: ['week__forecast'],
-                        attributes: {name: 'id', value: this.props.item.dt},
+                        attributes: {name: 'id', value: dt},
                         children: [
                             {
                                 tag: 'div',
                                 classList: ['week__forecast_day'],
-                                content: `${days[day]}`
+                                content: `${convertToDay(dt)}`
                             },
                             {
                                 tag: 'div',
                                 classList: ['week__forecast_img'],
-                                content: `<img  src="http://openweathermap.org/img/w/${item.weather[0].icon}.png" alt="${item.weather[0].description}" title="${item.weather[0].description}" >`//'<i class="fas fa-cloud-sun-rain"></i>'
+                                content: `<img  src="http://openweathermap.org/img/w/${weather[0].icon}.png" alt="${weather[0].description}" title="${weather[0].description}" >`//'<i class="fas fa-cloud-sun-rain"></i>'
                             },
                             {
                                 tag: 'div',
                                 classList: ['week__forecast_temperature'],
-                                content: `${this.props.item.main.temp.toFixed(1)}°`
+                                content: `${main.temp.toFixed(1)}°`
                             },
                         ]
                     },

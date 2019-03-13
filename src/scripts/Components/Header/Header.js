@@ -4,8 +4,9 @@ import {UnitSelect} from "./UnitSelect/";
 import {FavoritesButton} from "./FavoritesButton/";
 
 class Header extends Component{
-    constructor(host) {
-        super(host);
+    constructor(host, props) {
+        super(host, props);
+        this.props = props;
     }
     render() {
         return [
@@ -29,7 +30,7 @@ class Header extends Component{
                                         children: [
                                             {
                                                 tag: SearchBar,
-                                                props: {}
+                                                props: { onFormSubmit: this.props.onFormSubmit }
                                             }
                                         ]
                                     },

@@ -3,6 +3,15 @@ export const URL1 = `https://api.openweathermap.org/data/2.5/weather?q=`;
 
 export const KEY = 'e17681c6b25cbaab506757b3f0966598';
 
+export const convertToData = stringData => {
+    const date = new Date(stringData);
+    return new Intl.DateTimeFormat('en-GB').format(date);
+};
+
+export const convertToDay = (msData, format='short') => {
+    return new Intl.DateTimeFormat('en-US', {weekday: format}).format(msData*1000);
+};
+
 export const classes = {
     loader: 'loader'
 };

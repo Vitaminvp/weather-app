@@ -16,26 +16,31 @@ class App extends Component{
     bindBeforeRender(){
         this.onServerResponse = this.onServerResponse.bind(this);
         this.updateState = this.updateState.bind(this);
+        this.onFormSubmit = this.onFormSubmit.bind(this);
         WeatherDataService.subscribeForWeatherForecast(this.onServerResponse);
         WeatherDataService.subscribeForCurrentWeather(this.onServerResponse);
     }
 
     updateState(nextState) {
         this.state = Object.assign({}, this.state, nextState);
+        //this.state = {...this.state, ...nextState};
         this._render();
-        console.log("this.state", this.state);
     }
 
     onServerResponse(weatherData) {
         this.updateState(weatherData);
         // ensure weatherData is properly rendered
     }
-
+    onFormSubmit(query=''){
+        console.log("submit", query);
+        WeatherDataService.subscribeForCurrentWeather(this.onServerResponse, query);
+        WeatherDataService.subscribeForWeatherForecast(this.onServerResponse, query);
+    }
     render() {
         return [
             {
                 tag: Header,
-                props: {},
+                props: { onFormSubmit: this.onFormSubmit },
             },
             {
                 tag: CurrentWeather,

@@ -226,6 +226,15 @@ h1:hover {
     border: 1px solid transparent;
     border-radius: 5px;
 }
+.forecast,
+.week__forecast,
+.favorite,
+.recent,
+.search__input,
+.search__units,
+.search__star {
+    box-shadow: 0px 1px 1px #4b5183;
+}
 
 .forecast__city {
     margin-bottom: 20px;
@@ -272,6 +281,8 @@ h1:hover {
     display: block;
     margin-bottom: 20px;
 }
+.forecast__temperature_min:before,
+.forecast__temperature_max:before,
 .forecast__date:before,
 .forecast__wind:before,
 .forecast__pressure:before,
@@ -313,6 +324,23 @@ h1:hover {
 .forecast__pressure:before{
     content: "\f5cd";
 }
+
+.forecast__temperature_max,
+.forecast__temperature_min{
+    position: relative;
+    padding-left: 25px;
+}
+
+.forecast__temperature_min:before{
+    content: "\f76b";
+    top: -2px;
+}
+
+.forecast__temperature_max:before{
+    content: "\f769";
+    top: -2px;
+}
+
 .forecast__img {
     text-align: center;
     font-size: 36px;
@@ -341,6 +369,7 @@ h1:hover {
     font-size: 100px;
     text-align: center;
     margin-top: 20px;
+    letter-spacing: -10px;
 }
 
 /* WEEK FORECAST */

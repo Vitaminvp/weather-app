@@ -1,4 +1,5 @@
 import {Component} from "../../framework/";
+import {convertToData, convertToDay} from "../../../Services/constants";
 
 class CurrentWeather extends Component{
     constructor(host, props) {
@@ -6,14 +7,7 @@ class CurrentWeather extends Component{
     }
 
     render() {
-        const dateMs = this.props.dt;
-        const convertData = stringData => {
-            const date = new Date(stringData);
-            console.log("date", date);
-            return new Intl.DateTimeFormat('en-GB').format(date);
-        };
-        const day = new Date(dateMs).getDay();
-        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        const {dt, name, sys, wind, main, weather} = this.props;
         return [
             {
                 tag: 'section',
@@ -35,7 +29,7 @@ class CurrentWeather extends Component{
                                                 tag: 'div',
                                                 classList: ['forecast'],
                                                 children: [
-                                                    {tag: 'h2', classList: ['forecast__city'], content: `${this.props.name}, ${this.props.sys?this.props['sys'].country:''}`},
+                                                    {tag: 'h2', classList: ['forecast__city'], content: `${name}, ${sys?sys.country:''}`},
                                                     {
                                                         tag: 'div',
                                                         classList: ['container'],
@@ -51,27 +45,27 @@ class CurrentWeather extends Component{
                                                                             {
                                                                                 tag: 'div',
                                                                                 classList: ['forecast__day'],
-                                                                                content: `${day?days[day]:''}`
+                                                                                content: `${dt?convertToDay(dt, 'long'):''}`
                                                                             },
                                                                             {
                                                                                 tag: 'time',
                                                                                 classList: ['forecast__date'],
-                                                                                content: `${dateMs?convertData(dateMs):''}`
+                                                                                content: `${dt?convertToData(dt):''}`
                                                                             },
                                                                             {
                                                                                 tag: 'div',
                                                                                 classList: ['forecast__wind'],
-                                                                                content: `Wind ${this.props.wind?this.props.wind.speed:''} m/s`
+                                                                                content: `Wind ${wind?wind.speed:''} m/s`
                                                                             },
                                                                             {
                                                                                 tag: 'div',
                                                                                 classList: ['forecast__humidity'],
-                                                                                content: `${this.props.main?this.props.main.humidity:''} %`
+                                                                                content: `${main?main.humidity:''} %`
                                                                             },
                                                                             {
                                                                                 tag: 'div',
                                                                                 classList: ['forecast__pressure'],
-                                                                                content: `${this.props.main?this.props.main.pressure:''} hPa`
+                                                                                content: `${main?main.pressure:''} hPa`
                                                                             },
                                                                         ],
                                                                     },
@@ -82,12 +76,12 @@ class CurrentWeather extends Component{
                                                                             {
                                                                                 tag: 'div',
                                                                                 classList: ['forecast__img'],
-                                                                                content: `<img  src='http://openweathermap.org/img/w/${this.props.weather?this.props.weather[0].icon:'01d'}.png' alt='${this.props.weather?this.props.weather[0].description:''}' title='${this.props.weather?this.props.weather[0].description:''}' >`
+                                                                                content: `<img  src='http://openweathermap.org/img/w/${weather?weather[0].icon:'01d'}.png' alt='${weather?weather[0].description:''}' title='${weather?weather[0].description:''}' >`
                                                                             },
                                                                             {
                                                                                 tag: 'div',
                                                                                 classList: ['forecast__weather'],
-                                                                                content: this.props.weather?this.props.weather[0].description:''
+                                                                                content: weather?weather[0].description:''
                                                                             },
                                                                         ],
                                                                     },
@@ -102,12 +96,12 @@ class CurrentWeather extends Component{
                                                                                     {
                                                                                         tag: 'div',
                                                                                         classList: ['forecast__temperature_min'],
-                                                                                        content: `<i class="fas fa-temperature-low"></i> ${this.props.main?this.props.main.temp_min:''}°`
+                                                                                        content: `${main?main.temp_min:''}°`
                                                                                     },
                                                                                     {
                                                                                         tag: 'div',
                                                                                         classList: ['forecast__temperature_max'],
-                                                                                        content: `<i class="fas fa-temperature-high"></i> ${this.props.main?this.props.main.temp_max:''}°`
+                                                                                        content: `${main?main.temp_max:''}°`
                                                                                     },
                                                                                 ]
                                                                             },

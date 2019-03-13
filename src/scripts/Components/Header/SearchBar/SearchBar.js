@@ -2,10 +2,16 @@ import "babel-polyfill";
 // import WeatherDataService from "../../../../Services/WeatherDataService.js";
 import { Component } from "../../../framework";
 import { CITIES } from '../../../../data/city.min';
+import WeatherDataService from "../../../../Services/WeatherDataService";
 
 class SearchBar extends Component{
-    constructor(host, props){
+    constructor(host, props) {
         super(host, props);
+        this.props = props;
+        this.bindBeforeRender();
+    }
+
+    bindBeforeRender(){
         this.handleChange    = this.handleChange.bind(this);
         this.handleSubmit    = this.handleSubmit.bind(this);
         this.handleListClick = this.handleListClick.bind(this);
@@ -45,7 +51,7 @@ class SearchBar extends Component{
     handleSubmit(e){
         e.preventDefault();
         const query = e.target.querySelector('.search__input').value.split(', ');
-        console.log("query", query);
+        this.props.onFormSubmit(query);
     };
 
     handleListClick(e){

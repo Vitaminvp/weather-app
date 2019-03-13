@@ -7,21 +7,25 @@ class WeatherDataService{
         //this.subscribeForCurrentWeather = this.subscribeForCurrentWeather.bind(this);
     }
 
-    subscribeForCurrentWeather(callback){
-        this.getCurrentWeather()
+    subscribeForCurrentWeather(callback, query){
+        this.getCurrentWeather(query)
             .then(currentWeather => callback({currentWeather}));
     }
-    subscribeForWeatherForecast(callback){
-        this.getWeatherForecast()
+    subscribeForWeatherForecast(callback, query){
+        this.getWeatherForecast(query)
             .then(weatherForecast => callback({weatherForecast}));
     }
-    getCurrentWeather(query = 'Kiev'){
-        const url = `${URL1}${query}&appid=${KEY}&units=metric`;
+    getCurrentWeather(query = ['Kiev', 'UA']){
+        const city = query[0];
+        const code = query[1];
+        const url = `${URL1}${city},${code}&appid=${KEY}&units=metric`;
         return this._getData(url);
     }
 
-    getWeatherForecast(query = 'London') {
-        const url = `${URL5}${query}&appid=${KEY}&units=metric`;
+    getWeatherForecast(query = ['London', 'GB']) {
+        const city = query[0];
+        const code = query[1];
+        const url = `${URL5}${city},${code}&appid=${KEY}&units=metric`;
         return this._getData(url);
     }
 
