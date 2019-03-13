@@ -41,11 +41,13 @@ class SearchBar extends Component{
             ul.innerHTML = '';
         }
     };
+
     handleSubmit(e){
         e.preventDefault();
-        const query = e.target.querySelector('.search__input').value.split(', ')[0];
-
+        const query = e.target.querySelector('.search__input').value.split(', ');
+        console.log("query", query);
     };
+
     handleListClick(e){
         if(e.target.classList.contains('search__list_item')){
             const input = e.target.closest('.search__form').querySelector('.search__input');
