@@ -4,8 +4,9 @@ import {SearchHistory} from "./SearchHistory";
 
 
 class Footer extends Component{
-    constructor(host) {
-        super(host);
+    constructor(host, props) {
+        super(host, props);
+        this.props = props;
     }
     render() {
         return [
@@ -28,7 +29,12 @@ class Footer extends Component{
                                         children: [
                                             {
                                                 tag: FavouriteLocations,
-                                                props: {}
+                                                props: {
+                                                    likes: this.props.likes,
+                                                    handleDeleteAllLikes: this.props.handleDeleteAllLikes,
+                                                    handleItemClick: this.props.handleItemClick,
+                                                    handleDeleteFavoriteItem: this.props.handleDeleteFavoriteItem,
+                                                }
                                             },
                                         ]
                                     },
@@ -38,7 +44,12 @@ class Footer extends Component{
                                         children: [
                                             {
                                                 tag: SearchHistory,
-                                                props: {}
+                                                props: {
+                                                    history: this.props.history,
+                                                    handleDeleteHistoryItem: this.props.handleDeleteHistoryItem,
+                                                    handleItemClick: this.props.handleItemClick,
+                                                    handleDeleteAllHistory: this.props.handleDeleteAllHistory
+                                                }
                                             },
                                         ]
                                     },

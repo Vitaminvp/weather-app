@@ -1,10 +1,31 @@
 import {Component} from "../../../framework/";
 
 
-class FavouriteLocations extends Component{
-    constructor(host) {
-        super(host);
+class FavouriteLocations extends Component {
+    constructor(host, props) {
+        super(host, props);
+        this.props = props;
+        this.bindBeforeRender()
     }
+
+    bindBeforeRender() {
+        this.handleDeleteAllLikes = this.handleDeleteAllLikes.bind(this);
+        this.handleItemClick = this.handleItemClick.bind(this);
+        this.handleDeleteFavoriteItem = this.handleDeleteFavoriteItem.bind(this);
+    }
+
+    handleDeleteAllLikes() {
+        this.props.handleDeleteAllLikes();
+    }
+
+    handleItemClick(e){
+        this.props.handleItemClick(e)
+    }
+
+    handleDeleteFavoriteItem(e){
+        this.props.handleDeleteFavoriteItem(e)
+    }
+
     render() {
         return [
             {
@@ -23,39 +44,53 @@ class FavouriteLocations extends Component{
                             {
                                 tag: 'button',
                                 classList: ['favorite__delete'],
-                                content: '<i class="far fa-trash-alt"></i>'
+                                content: '<i class="far fa-trash-alt"></i>',
+                                eventHandler: [
+                                    {
+                                        eventType: 'click',
+                                        handler: this.handleDeleteAllLikes,
+                                    }
+                                ]
                             },
                         ]
                     },
                     {
                         tag: 'ul',
                         classList: ['favorite__list'],
-                        children: [
-                            {
-                                tag: 'li',
-                                attributes: {name: 'id', value: '11'},
-                                children: [
-                                    {tag: 'span', content: 'Kyiv, Ukraine, 02000'},
-                                    {
-                                        tag: 'button',
-                                        classList: ['favorite__list_delete'],
-                                        attributes: [{name: 'type', value: 'button'}],
-                                        content: '<i class="fas fa-times"></i>'}
-                                ]
-                            },
-                            {
-                                tag: 'li',
-                                attributes: {name: 'id', value: '12'},
-                                children: [
-                                    {tag: 'span', content: 'Kyiv, Ukraine, 02000'},
-                                    {
-                                        tag: 'button',
-                                        classList: ['favorite__list_delete'],
-                                        attributes: [{name: 'type', value: 'button'}],
-                                        content: '<i class="fas fa-times"></i>'}
-                                ]
-                            },
-                        ]
+                        children: this.props.likes ?
+                            this.props.likes.map(item => {
+                                return ({
+                                    tag: 'li',
+                                    children: [
+                                        {
+                                            tag: 'span',
+                                            classList: ['favorite__list_name'],
+                                            content: item.name,
+                                            eventHandler: [
+                                                {
+                                                    eventType: 'click',
+                                                    handler: this.handleItemClick,
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            tag: 'button',
+                                            classList: ['favorite__list_delete'],
+                                            attributes: [{name: 'type', value: 'button'}, {name: 'data-id', value: item.id}],
+                                            content: '',
+                                            eventHandler: [
+                                                {
+                                                    eventType: 'click',
+                                                    handler: this.handleDeleteFavoriteItem,
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                })
+                            })
+                            :[],
+
+
                     },
                 ]
             },

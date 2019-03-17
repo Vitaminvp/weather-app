@@ -2,9 +2,30 @@ import {Component} from "../../../framework/";
 
 
 class SearchHistory extends Component{
-    constructor(host) {
-        super(host);
+    constructor(host, props) {
+        super(host, props);
+        this.props = props;
+        this.bindBeforeRender();
     }
+
+    bindBeforeRender() {
+        this.handleDeleteHistoryItem = this.handleDeleteHistoryItem.bind(this);
+        this.handleDeleteAllHistory = this.handleDeleteAllHistory.bind(this);
+        this.handleItemClick = this.handleItemClick.bind(this);
+    }
+
+    handleDeleteAllHistory() {
+        this.props.handleDeleteAllHistory();
+    }
+
+    handleItemClick(e){
+        this.props.handleItemClick(e)
+    }
+
+    handleDeleteHistoryItem(e){
+        this.props.handleDeleteHistoryItem(e)
+    }
+
     render() {
         return [
             {
@@ -23,39 +44,55 @@ class SearchHistory extends Component{
                             {
                                 tag: 'button',
                                 classList: ['recent__delete'],
-                                content: '<i class="far fa-trash-alt"></i>'
+                                content: '<i class="far fa-trash-alt"></i>',
+                                eventHandler: [
+                                    {
+                                        eventType: 'click',
+                                        handler: this.handleDeleteAllHistory,
+                                    }
+                                ]
                             },
                         ]
                     },
                     {
                         tag: 'ul',
                         classList: ['recent__list'],
-                        children: [
-                            {
-                                tag: 'li',
-                                attributes: {name: 'id', value: '21'},
-                                children: [
-                                    {tag: 'span', content: 'Kyiv, Ukraine, 02000'},
-                                    {
-                                        tag: 'button',
-                                        classList: ['favorite__list_delete'],
-                                        attributes: [{name: 'type', value: 'button'}],
-                                        content: '<i class="fas fa-times"></i>'}
-                                ]
-                            },
-                            {
-                                tag: 'li',
-                                attributes: {name: 'id', value: '22'},
-                                children: [
-                                    {tag: 'span', content: 'Kyiv, Ukraine, 02000'},
-                                    {
-                                        tag: 'button',
-                                        classList: ['favorite__list_delete'],
-                                        attributes: [{name: 'type', value: 'button'}],
-                                        content: '<i class="fas fa-times"></i>'}
-                                ]
-                            },
-                        ]
+                        children: this.props.history ?
+                            this.props.history.map(item => {
+                                return ({
+                                    tag: 'li',
+                                    children: [
+                                        {
+                                            tag: 'span',
+                                            classList: ['favorite__list_name'],
+                                            content: item.name,
+                                            eventHandler: [
+                                                {
+                                                    eventType: 'click',
+                                                    handler: this.handleItemClick,
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            tag: 'button',
+                                            classList: ['favorite__list_delete'],
+                                            attributes: [
+                                                {name: 'type', value: 'button'},
+                                                {name: 'data-id', value: item.id},
+                                                {name: 'data-dataId', value: item.dataId}
+                                                ],
+                                            content: '&nbsp;',
+                                            eventHandler: [
+                                                {
+                                                    eventType: 'click',
+                                                    handler: this.handleDeleteHistoryItem,
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                })
+                            })
+                            :[],
                     },
                 ]
             },

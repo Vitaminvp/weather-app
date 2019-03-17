@@ -40,7 +40,10 @@ class Header extends Component{
                                         children: [
                                             {
                                                 tag: UnitSelect,
-                                                props: {}
+                                                props: {
+                                                    handleUnitChange: this.props.handleUnitChange,
+                                                    unit: this.props.unit
+                                                }
                                             }
                                         ]
                                     },
@@ -50,7 +53,10 @@ class Header extends Component{
                                         children: [
                                             {
                                                 tag: FavoritesButton,
-                                                props: {}
+                                                props: {
+                                                    onCityLike: this.props.onCityLike,
+                                                    isLiked: this.props.isLiked
+                                                }
                                             }
                                         ]
                                     },

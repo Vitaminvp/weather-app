@@ -12,6 +12,14 @@ export const convertToDay = (msData, format='short') => {
     return new Intl.DateTimeFormat('en-US', {weekday: format}).format(msData*1000);
 };
 
+export const convertTempUnit = (value, unit) => {
+    return unit === 'CE'
+        ? `${value.toFixed(0)} &deg;C`
+        : unit === 'FA'
+            ? `${(value + 32).toFixed(0)} &deg;F`
+            : `${(value + 273.15).toFixed(0)} K`;
+};
+
 export const classes = {
     loader: 'loader'
 };
@@ -34,3 +42,5 @@ export const clearLoader = () => {
     const loader = document.querySelector(`.${classes.loader}`);
     if(loader) loader.parentNode.removeChild(loader);
 };
+
+

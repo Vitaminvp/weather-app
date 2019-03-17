@@ -4,7 +4,6 @@ import { URL1, URL5, KEY } from './constants';
 
 class WeatherDataService{
     constructor(){
-        //this.subscribeForCurrentWeather = this.subscribeForCurrentWeather.bind(this);
     }
 
     subscribeForCurrentWeather(callback, query){

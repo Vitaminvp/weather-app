@@ -1,5 +1,5 @@
 import {Component} from "../../framework/";
-import {convertToData, convertToDay} from "../../../Services/constants";
+import {convertToData, convertToDay, convertTempUnit} from "../../../Services/constants";
 
 class CurrentWeather extends Component{
     constructor(host, props) {
@@ -7,7 +7,8 @@ class CurrentWeather extends Component{
     }
 
     render() {
-        const {dt, name, sys, wind, main, weather} = this.props;
+        console.log("this.props", this.props);
+        const { dt, name, sys, wind, main, weather, unit} = this.props;
         return [
             {
                 tag: 'section',
@@ -96,19 +97,19 @@ class CurrentWeather extends Component{
                                                                                     {
                                                                                         tag: 'div',
                                                                                         classList: ['forecast__temperature_min'],
-                                                                                        content: `${main?main.temp_min:''}°`
+                                                                                        content: `${ main ? convertTempUnit( main.temp_min, unit):''}`
                                                                                     },
                                                                                     {
                                                                                         tag: 'div',
                                                                                         classList: ['forecast__temperature_max'],
-                                                                                        content: `${main?main.temp_max:''}°`
+                                                                                        content: `${ main ? convertTempUnit( main.temp_max, unit):''}`
                                                                                     },
                                                                                 ]
                                                                             },
                                                                             {
                                                                                 tag: 'div',
                                                                                 classList: ['forecast__temperature_current'],
-                                                                                content: `${this.props.main?this.props.main.temp.toFixed(1):''}°`                                                                          },
+                                                                                content: `${ main ? convertTempUnit( main.temp, unit):''}`                                                                          },
                                                                         ],
                                                                     }
                                                                 ],

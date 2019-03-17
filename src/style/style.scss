@@ -328,17 +328,21 @@ h1:hover {
 .forecast__temperature_max,
 .forecast__temperature_min{
     position: relative;
-    padding-left: 25px;
+    padding-left: 18px;
 }
 
 .forecast__temperature_min:before{
     content: "\f76b";
-    top: -2px;
+    font-size: 16px;
+    top: 0;
+    left: -5px;
 }
 
 .forecast__temperature_max:before{
     content: "\f769";
-    top: -2px;
+    font-size: 16px;
+    top: 0;
+    left: -5px;
 }
 
 .forecast__img {
@@ -358,7 +362,7 @@ h1:hover {
 .forecast__temperature {
     display: flex;
     justify-content: space-around;
-    font-size: 22px;
+    font-size: 20px;
 }
 
 .forecast__temperature_min {
@@ -366,10 +370,10 @@ h1:hover {
 }
 
 .forecast__temperature_current {
-    font-size: 100px;
+    font-size: 60px;
     text-align: center;
     margin-top: 20px;
-    letter-spacing: -10px;
+    letter-spacing: -6px;
 }
 
 /* WEEK FORECAST */
@@ -412,6 +416,8 @@ h1:hover {
     background-color:rgba(255,255,255, .1);
     border: 1px solid transparent;
     border-radius: 5px;
+    max-height: 300px;
+    overflow: auto;
 }
 
 .recent__delete,
@@ -431,7 +437,20 @@ h1:hover {
     cursor: pointer;
     outline: none;
 }
-
+.favorite__list_delete:before{
+    position: absolute;
+    left: 0;
+    top: 4px;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Font Awesome 5 Free", sans-serif;
+    font-weight: 900;
+    content: "\f00d";
+    margin-right: 10px;
+}
 .favorite__list_delete,
 .recent__list_delete {
     top: 0;
@@ -471,7 +490,10 @@ h1:hover {
     padding: 0;
     list-style: none;
 }
-
+.favorite__list_name{
+    display: flex;
+    width: 100%;
+}
 .recent__list li,
 .favorite__list li {
     position: relative;

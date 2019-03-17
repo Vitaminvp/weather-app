@@ -1,12 +1,13 @@
 import {Component} from "../../../framework/";
-import {convertToDay} from "../../../../Services/constants";
+import {convertToDay, convertTempUnit} from "../../../../Services/constants";
 
 class WeatherForecastItem extends Component{
     constructor(host, props) {
         super(host, props);
     }
     render() {
-        const {dt, main, weather} = this.props.item;
+        console.log("this.props", this.props);
+        const {dt, main, weather, unit} = this.props;
         return [
             {
                 tag: 'div',
@@ -30,7 +31,7 @@ class WeatherForecastItem extends Component{
                             {
                                 tag: 'div',
                                 classList: ['week__forecast_temperature'],
-                                content: `${main.temp.toFixed(1)}°`
+                                content: `${main ? convertTempUnit(main.temp, unit):''}`
                             },
                         ]
                     },
