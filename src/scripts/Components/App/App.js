@@ -5,11 +5,21 @@ import {WeatherForecast} from "../WeatherForecast";
 import {Footer} from "../Footer";
 import WeatherDataService from "../../../Services/WeatherDataService";
 
-class App extends Component{
+class App extends Component {
     constructor(host, props) {
         super(host, props);
         this.props = props;
-        this.bindBeforeRender();
+        this.componentWillMount();
+
+    }
+
+    componentWillMount() {
+        ['onServerResponse', 'updateState', 'onFormSubmit', 'handleDeleteAllLikes', 'handleDeleteAllHistory', 'onCityLike', 'handleItemClick', 'handleDeleteHistoryItem', 'handleDeleteFavoriteItem', 'isLiked', 'isInHistory', 'handleUnitChange']
+            .forEach(name => this[name] = this[name].bind(this));
+
+        WeatherDataService.subscribeForWeatherForecast(this.onServerResponse);
+        WeatherDataService.subscribeForCurrentWeather(this.onServerResponse);
+
         this.state = {
             currentWeather: {},
             likes: [],
@@ -19,107 +29,112 @@ class App extends Component{
         };
     }
 
-    bindBeforeRender(){
-        this.onServerResponse = this.onServerResponse.bind(this);
-        this.updateState = this.updateState.bind(this);
-        this.onFormSubmit = this.onFormSubmit.bind(this);
-        this.handleDeleteAllLikes = this.handleDeleteAllLikes.bind(this);
-        this.handleDeleteAllHistory = this.handleDeleteAllHistory.bind(this);
-        this.onCityLike = this.onCityLike.bind(this);
-        this.handleItemClick = this.handleItemClick.bind(this);
-        this.handleDeleteHistoryItem = this.handleDeleteHistoryItem.bind(this);
-        this.handleDeleteFavoriteItem = this.handleDeleteFavoriteItem.bind(this);
-        this.isLiked = this.isLiked.bind(this);
-        this.isInHistory = this.isInHistory.bind(this);
-        this.handleUnitChange = this.handleUnitChange.bind(this);
-        WeatherDataService.subscribeForWeatherForecast(this.onServerResponse);
-        WeatherDataService.subscribeForCurrentWeather(this.onServerResponse);
-    }
-
     updateState(nextState) {
         this.state = Object.assign({}, this.state, nextState);
-        this.state.isLiked = this.isLiked();
-
-        if(!this.state.history.length||this.state.history[this.state.history.length - 1].id !== this.state.currentWeather.id){
-            const dataId = Math.random().toString(36).substr(2, 9);
-            this.state.history.push({
-                id: this.state.currentWeather ? this.state.currentWeather.id : '',
-                dataId,
-                name: `${this.state.currentWeather.name}, ${this.state.currentWeather.sys.country}`
-            });
-        }
-
-
-        console.log("state", this.state);
-
         this._render();
     }
 
     onServerResponse(weatherData) {
-        this.updateState(weatherData);
+        if (!this.state.history.length || this.state.history[this.state.history.length - 1].id !== this.state.currentWeather.id) {
+            const dataId = Math.random().toString(36).substr(2, 9);
+            this.updateState({
+                ...weatherData,
+                history: [
+                    ...this.state.history,
+                    {
+                        id: this.state.currentWeather ? this.state.currentWeather.id : '',
+                        dataId,
+                        name: `${this.state.currentWeather?this.state.currentWeather.name:''}, ${this.state.currentWeather.sys?this.state.currentWeather.sys.country : ''}`
+                    }
+                ],
+                isLiked: this.isLiked()
+            });
+        } else {
+            this.updateState({...weatherData, isLiked: this.isLiked()});
+        }
+
+
     }
 
-    onFormSubmit(query=''){
+    onFormSubmit(query = '') {
         WeatherDataService.subscribeForCurrentWeather(this.onServerResponse, query);
         WeatherDataService.subscribeForWeatherForecast(this.onServerResponse, query);
     }
 
-    handleDeleteFavoriteItem(e){
-        this.state.likes = this.state.likes.filter(item => item.id !== +e.target.dataset.id);
-        this.state.isLiked = this.isLiked();
-        this._render();
+    handleDeleteFavoriteItem(e) {
+        if(this.state.currentWeather.id === +e.target.dataset.id){
+            this.updateState({
+                isLiked: false,
+                likes: this.state.likes.filter(item => item.id !== +e.target.dataset.id)
+            });
+        }else{
+            this.updateState({
+                likes: this.state.likes.filter(item => item.id !== +e.target.dataset.id),
+                isLiked: this.isLiked()
+            });
+        }
+
+        console.log("this.isLiked()", this.isLiked());
     }
 
-    handleDeleteAllLikes(){
-        this.state.likes = [];
-        this.state.isLiked = false;
-        this._render();
+    handleDeleteAllLikes() {
+        this.updateState({
+            likes: [],
+            isLiked: false
+        });
     }
 
-    isLiked(){
+    isLiked() {
         return this.state.likes.some(item => this.state.currentWeather.id === item.id);
     }
 
-    handleItemClick(e){
+    handleItemClick(e) {
         this.onFormSubmit(e.target.textContent.split(', '));
     }
 
 
-    handleDeleteHistoryItem(e){
-        this.state.history = this.state.history.filter(item => item.dataId !== e.target.dataset.dataid);
-        this._render();
+    handleDeleteHistoryItem(e) {
+        this.updateState({
+            history: this.state.history.filter(item => item.dataId !== e.target.dataset.dataid)
+        });
     }
 
-    handleDeleteAllHistory(){
-        this.state.history = [];
-        this._render();
+    handleDeleteAllHistory() {
+        this.updateState({
+            history: []
+        });
     }
 
-    isInHistory(){
+    isInHistory() {
         return this.state.history.some(item => this.state.currentWeather.id === item.id);
-        this._render();
     }
 
-    onCityLike(){
-        if(this.isLiked()){
-            this.state.likes = this.state.likes.filter(item => item.id !== this.state.currentWeather.id);
-            this.state.isLiked = false;
-        }else{
-            this.state.likes.push({
-                id: this.state.currentWeather.id,
-                name: `${this.state.currentWeather.name}, ${this.state.currentWeather.sys.country}`
+    onCityLike() {
+        if (this.isLiked()) {
+            this.updateState({
+                likes: this.state.likes.filter(item => item.id !== this.state.currentWeather.id),
+                isLiked: false
             });
-            this.state.isLiked = true;
+        } else {
+            this.updateState({
+                isLiked: true,
+                likes: [
+                    ...this.state.likes,
+                    {
+                        id: this.state.currentWeather.id,
+                        name: `${this.state.currentWeather.name}, ${this.state.currentWeather.sys.country}`
+                    }
+                ]
+            });
         }
-        this._render();
     }
-    handleUnitChange(e){
-        if(e.target.value) this.state.unit = e.target.value;
-        this._render();
+
+    handleUnitChange(e) {
+        if (e.target.value)
+            this.updateState({unit: e.target.value});
     }
+
     render() {
-        const { currentWeather } = this.state;
-        console.log("currentWeather", currentWeather);
         return [
             {
                 tag: Header,
@@ -133,7 +148,7 @@ class App extends Component{
             },
             {
                 tag: CurrentWeather,
-                props: { ...this.state.currentWeather, unit: this.state.unit }
+                props: {...this.state.currentWeather, unit: this.state.unit}
             },
             {
                 tag: WeatherForecast,

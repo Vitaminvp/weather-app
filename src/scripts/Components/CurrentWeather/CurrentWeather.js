@@ -1,5 +1,5 @@
 import {Component} from "../../framework/";
-import {convertToData, convertToDay, convertTempUnit} from "../../../Services/constants";
+import {convertToData, convertToDay, convertTempUnit, convertWind} from "../../../Services/constants";
 
 class CurrentWeather extends Component{
     constructor(host, props) {
@@ -7,7 +7,6 @@ class CurrentWeather extends Component{
     }
 
     render() {
-        console.log("this.props", this.props);
         const { dt, name, sys, wind, main, weather, unit} = this.props;
         return [
             {
@@ -56,7 +55,7 @@ class CurrentWeather extends Component{
                                                                             {
                                                                                 tag: 'div',
                                                                                 classList: ['forecast__wind'],
-                                                                                content: `Wind ${wind?wind.speed:''} m/s`
+                                                                                content: `Wind ${wind?convertWind(wind.speed, unit):''}`
                                                                             },
                                                                             {
                                                                                 tag: 'div',

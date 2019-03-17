@@ -6,7 +6,6 @@ class WeatherForecastItem extends Component{
         super(host, props);
     }
     render() {
-        console.log("this.props", this.props);
         const {dt, main, weather, unit} = this.props;
         return [
             {

@@ -4,9 +4,9 @@ class FavoritesButton extends Component{
     constructor(host, props){
         super(host, props);
         this.props = props;
-        this.bindBeforeRender();
+        this.componentWillMount();
     }
-    bindBeforeRender(){
+    componentWillMount(){
         this.onCityLike = this.onCityLike.bind(this);
     }
     onCityLike(){

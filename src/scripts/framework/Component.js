@@ -4,11 +4,11 @@ class Component{
         this.host = host;
         this.props = props;
         this.state = {};
-        this.bindBeforeRender();
+        this.componentWillMount();
         this._render();
     }
 
-    bindBeforeRender(){}
+    componentWillMount(){}
     updateState(){}
 
     _render(){

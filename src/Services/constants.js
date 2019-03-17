@@ -11,6 +11,11 @@ export const convertToData = stringData => {
 export const convertToDay = (msData, format='short') => {
     return new Intl.DateTimeFormat('en-US', {weekday: format}).format(msData*1000);
 };
+export const convertWind = (value, unit) => {
+    return unit === 'FA'
+            ? `${value} miles/hour`
+            : `${value} meter/sec`;
+};
 
 export const convertTempUnit = (value, unit) => {
     return unit === 'CE'

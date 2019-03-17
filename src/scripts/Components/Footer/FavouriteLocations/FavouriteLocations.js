@@ -5,13 +5,12 @@ class FavouriteLocations extends Component {
     constructor(host, props) {
         super(host, props);
         this.props = props;
-        this.bindBeforeRender()
+        this.componentWillMount()
     }
 
-    bindBeforeRender() {
-        this.handleDeleteAllLikes = this.handleDeleteAllLikes.bind(this);
-        this.handleItemClick = this.handleItemClick.bind(this);
-        this.handleDeleteFavoriteItem = this.handleDeleteFavoriteItem.bind(this);
+    componentWillMount() {
+        ['handleDeleteAllLikes', 'handleItemClick', 'handleDeleteFavoriteItem']
+            .forEach(name => this[name] = this[name].bind(this));
     }
 
     handleDeleteAllLikes() {

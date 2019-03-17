@@ -1,5 +1,4 @@
 import "babel-polyfill";
-// import WeatherDataService from "../../../../Services/WeatherDataService.js";
 import { Component } from "../../../framework";
 import { CITIES } from '../../../../data/city.min';
 import WeatherDataService from "../../../../Services/WeatherDataService";
@@ -8,13 +7,12 @@ class SearchBar extends Component{
     constructor(host, props) {
         super(host, props);
         this.props = props;
-        this.bindBeforeRender();
+        this.componentWillMount();
     }
 
-    bindBeforeRender(){
-        this.handleChange    = this.handleChange.bind(this);
-        this.handleSubmit    = this.handleSubmit.bind(this);
-        this.handleListClick = this.handleListClick.bind(this);
+    componentWillMount(){
+        ['handleChange', 'handleSubmit', 'handleListClick']
+            .forEach(name => this[name] = this[name].bind(this));
     }
 
     handleChange(e){

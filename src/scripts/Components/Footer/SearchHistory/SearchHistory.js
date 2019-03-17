@@ -5,13 +5,12 @@ class SearchHistory extends Component{
     constructor(host, props) {
         super(host, props);
         this.props = props;
-        this.bindBeforeRender();
+        this.componentWillMount();
     }
 
-    bindBeforeRender() {
-        this.handleDeleteHistoryItem = this.handleDeleteHistoryItem.bind(this);
-        this.handleDeleteAllHistory = this.handleDeleteAllHistory.bind(this);
-        this.handleItemClick = this.handleItemClick.bind(this);
+    componentWillMount() {
+        ['handleDeleteHistoryItem', 'handleDeleteAllHistory', 'handleItemClick']
+            .forEach(name => this[name] = this[name].bind(this));
     }
 
     handleDeleteAllHistory() {
