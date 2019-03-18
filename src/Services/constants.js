@@ -1,5 +1,5 @@
-export const URL5 = `https://api.openweathermap.org/data/2.5/forecast?q=`;
-export const URL1 = `https://api.openweathermap.org/data/2.5/weather?q=`;
+export const URL5 = `https://api.openweathermap.org/data/2.5/forecast`;
+export const URL1 = `https://api.openweathermap.org/data/2.5/weather`;
 
 export const KEY = 'e17681c6b25cbaab506757b3f0966598';
 
@@ -23,6 +23,16 @@ export const convertTempUnit = (value, unit) => {
         : unit === 'FA'
             ? `${(value + 32).toFixed(0)} &deg;F`
             : `${(value + 273.15).toFixed(0)} K`;
+};
+
+export const initAutocomplete = (input, callback) => {
+    const autocomplete = new google.maps.places.Autocomplete(input, {
+        types: ["(cities)"]
+    });
+    autocomplete.addListener("place_changed", e =>
+        // callback(autocomplete.getPlace())
+        console.log(e)
+    );
 };
 
 export const classes = {

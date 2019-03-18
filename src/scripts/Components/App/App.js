@@ -82,7 +82,7 @@ class App extends Component {
     }
 
     handleItemClick(e) {
-        if(e.target.nextElementSibling.dataset.id !== this.state.currentWeather.id)
+        if(+e.target.nextElementSibling.dataset.id !== this.state.currentWeather.id)
             this.onFormSubmit(e.target.textContent.split(', '));
     }
 
@@ -121,7 +121,6 @@ class App extends Component {
                 isLiked: true
             });
         }
-        console.log("this.state.likes", this.state.likes);
     }
 
     handleUnitChange(e) {

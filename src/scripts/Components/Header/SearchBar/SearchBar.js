@@ -1,13 +1,14 @@
 import "babel-polyfill";
 import { Component } from "../../../framework";
 import { CITIES } from '../../../../data/city.min';
-import WeatherDataService from "../../../../Services/WeatherDataService";
+import { initAutocomplete } from "../../../../Services/constants";
 
 class SearchBar extends Component{
     constructor(host, props) {
         super(host, props);
         this.props = props;
         this.componentWillMount();
+        //this.Autocomplite();
     }
 
     componentWillMount(){
@@ -61,6 +62,12 @@ class SearchBar extends Component{
             this.props.onFormSubmit(query.split(', '));
             e.target.parentNode.innerHTML = '';
         }
+    }
+
+    Autocomplite() {
+        const input = document.querySelector(".search__input");
+        // console.log(input);
+        initAutocomplete(input);
     }
     render(){
        return [
