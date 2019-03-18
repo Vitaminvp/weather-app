@@ -10,7 +10,6 @@ class App extends Component {
         super(host, props);
         this.props = props;
         this.componentWillMount();
-
     }
 
     componentWillMount() {
@@ -83,7 +82,8 @@ class App extends Component {
     }
 
     handleItemClick(e) {
-        this.onFormSubmit(e.target.textContent.split(', '));
+        if(e.target.nextElementSibling.dataset.id !== this.state.currentWeather.id)
+            this.onFormSubmit(e.target.textContent.split(', '));
     }
 
 

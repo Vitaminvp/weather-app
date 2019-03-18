@@ -11,18 +11,17 @@ class WeatherDataService{
             .then(weather => callback({currentWeather: weather[0], weatherForecast: weather[1]}));
     }
 
-
     getCurrentWeather(query = ['Kiev', 'UA'], units = 'metric'){
         const city = query[0];
         const code = query[1];
-        const url = `${URL1}${city},${code?code:''}&appid=${KEY}&units=${units}`;
+        const url = `${URL1}${city}${code?`,${code}`:''}&appid=${KEY}&units=${units}`;
         return this._getData(url);
     }
 
     getWeatherForecast(query = ['Kiev', 'UA'], units = 'metric') {
         const city = query[0];
         const code = query[1];
-        const url = `${URL5}${city},${code?code:''}&appid=${KEY}&units=${units}`;
+        const url = `${URL5}${city}${code?`,${code}`:''}&appid=${KEY}&units=${units}`;
         return this._getData(url);
     }
 
