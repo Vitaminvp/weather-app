@@ -25,7 +25,7 @@ class WeatherForecastItem extends Component{
                             {
                                 tag: 'div',
                                 classList: ['week__forecast_img'],
-                                content: `<img  src="http://openweathermap.org/img/w/${weather[0].icon}.png" alt="${weather[0].description}" title="${weather[0].description}" >`//'<i class="fas fa-cloud-sun-rain"></i>'
+                                content: `<img  src="https://openweathermap.org/img/w/${weather[0].icon}.png" alt="${weather[0].description}" title="${weather[0].description}" >`//'<i class="fas fa-cloud-sun-rain"></i>'
                             },
                             {
                                 tag: 'div',

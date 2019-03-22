@@ -1,4 +1,5 @@
 import {Component} from "../../framework/";
+import ComponentFactory from "../../framework/ComponentFactory";
 import {WeatherForecastItem} from "./WeatherForecastItem";
 
 class WeatherForecast extends Component {
@@ -6,8 +7,15 @@ class WeatherForecast extends Component {
         super(host, props);
     }
 
-    render() {
+    componentWillMount() {
+        this.weatherForecast = this.weatherForecast.bind(this);
+    }
 
+    weatherForecast(weatherForecast){
+        this.updateState(weatherForecast);
+    }
+
+    render() {
         return [
             {
                 tag: 'section',
@@ -40,5 +48,7 @@ class WeatherForecast extends Component {
         ];
     }
 }
+
+//ComponentFactory.register(WeatherForecast);
 
 export default WeatherForecast;

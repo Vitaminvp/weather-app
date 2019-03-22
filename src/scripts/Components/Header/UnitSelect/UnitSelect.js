@@ -4,7 +4,6 @@ class UnitSelect extends Component {
     constructor(host, props) {
         super(host, props);
         this.props = props;
-        this.componentWillMount();
     }
 
     componentWillMount() {

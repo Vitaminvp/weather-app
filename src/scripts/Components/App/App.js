@@ -4,12 +4,13 @@ import {CurrentWeather} from "../CurrentWeather/";
 import {WeatherForecast} from "../WeatherForecast";
 import {Footer} from "../Footer";
 import WeatherDataService from "../../../Services/WeatherDataService";
+import AppState from "../../Services/AppState";
 
 class App extends Component {
     constructor(host, props) {
         super(host, props);
         this.props = props;
-        this.componentWillMount();
+
     }
 
     componentWillMount() {
@@ -17,19 +18,16 @@ class App extends Component {
             .forEach(name => this[name] = this[name].bind(this));
 
         WeatherDataService.subscribeForWeather(this.onServerResponse);
+        const localStorageFavourites = localStorage.getItem('favourites')?JSON.parse(localStorage.getItem('favourites')):[];
+        const localStorageHistory = localStorage.getItem('history')?JSON.parse(localStorage.getItem('history')):[];
 
         this.state = {
             currentWeather: {},
-            likes: [],
+            likes: localStorageFavourites,
             isLiked: false,
-            history: [],
+            history: localStorageHistory,
             unit: 'CE'
         };
-    }
-
-    updateState(nextState) {
-        this.state = Object.assign({}, this.state, nextState);
-        this._render();
     }
 
     onServerResponse(weatherData) {
@@ -50,6 +48,8 @@ class App extends Component {
         } else {
             this.updateState({...weatherData, isLiked: this.isLiked()});
         }
+        console.log("this.state.history", this.state.history);
+        this.persistHistoryToLocalStorage();
     }
 
     onFormSubmit(query) {
@@ -68,6 +68,7 @@ class App extends Component {
                 isLiked: this.isLiked(this.state.currentWeather)
             });
         }
+        this.persistLikesToLocalStorage();
     }
 
     handleDeleteAllLikes() {
@@ -75,10 +76,12 @@ class App extends Component {
             likes: [],
             isLiked: false
         });
+        this.persistLikesToLocalStorage();
     }
 
     isLiked(currentValue) {
         return this.state.likes.some(item => currentValue.id === item.id);
+        console.log("localStorageFavourites", localStorageFavourites);
     }
 
     handleItemClick(e) {
@@ -91,12 +94,14 @@ class App extends Component {
         this.updateState({
             history: this.state.history.filter(item => item.dataId !== e.target.dataset.dataid)
         });
+        this.persistHistoryToLocalStorage();
     }
 
     handleDeleteAllHistory() {
         this.updateState({
             history: []
         });
+        this.persistHistoryToLocalStorage();
     }
 
     isInHistory() {
@@ -121,13 +126,19 @@ class App extends Component {
                 isLiked: true
             });
         }
+        this.persistLikesToLocalStorage();
     }
 
     handleUnitChange(e) {
         if (e.target.value)
             this.updateState({unit: e.target.value});
     }
-
+    persistLikesToLocalStorage(){
+        localStorage.setItem('favourites', JSON.stringify(this.state.likes))
+    }
+    persistHistoryToLocalStorage(){
+        localStorage.setItem('history', JSON.stringify(this.state.history))
+    }
     render() {
         return [
             {

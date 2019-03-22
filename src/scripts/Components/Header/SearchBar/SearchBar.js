@@ -7,13 +7,23 @@ class SearchBar extends Component{
     constructor(host, props) {
         super(host, props);
         this.props = props;
-        this.componentWillMount();
-        //this.Autocomplite();
     }
 
     componentWillMount(){
-        ['handleChange', 'handleSubmit', 'handleListClick']
+        ['handleChange', 'handleSubmit', 'handleListClick', 'handleAutocomplet']
             .forEach(name => this[name] = this[name].bind(this));
+    }
+
+    componentDidMount(){
+        //setTimeout(()=> {
+            //const input = document.querySelector(".search__input");
+            //console.log("input", input);
+            //this.Autocomplite(input, this.handleAutocomplet)
+        //}, 200);
+    }
+
+    handleAutocomplet(e){
+        //console.log("e", e);
     }
 
     handleChange(e){

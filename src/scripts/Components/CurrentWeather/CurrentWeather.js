@@ -76,7 +76,7 @@ class CurrentWeather extends Component{
                                                                             {
                                                                                 tag: 'div',
                                                                                 classList: ['forecast__img'],
-                                                                                content: `<img  src='http://openweathermap.org/img/w/${weather?weather[0].icon:'01d'}.png' alt='${weather?weather[0].description:''}' title='${weather?weather[0].description:''}' >`
+                                                                                content: `<img  src='https://openweathermap.org/img/w/${weather?weather[0].icon:'01d'}.png' alt='${weather?weather[0].description:''}' title='${weather?weather[0].description:''}' >`
                                                                             },
                                                                             {
                                                                                 tag: 'div',

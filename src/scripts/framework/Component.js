@@ -6,10 +6,15 @@ class Component{
         this.state = {};
         this.componentWillMount();
         this._render();
+        this.componentDidMount();
     }
 
     componentWillMount(){}
-    updateState(){}
+    componentDidMount(){}
+    updateState(nextState) {
+        this.state = Object.assign({}, this.state, nextState);
+        this._render();
+    }
 
     _render(){
         this.host.innerHTML = '';
@@ -72,12 +77,25 @@ class Component{
                         });
                     }
 
-                    if(element.eventHandler){
+                    if(element.eventHandler && Array.isArray(element.eventHandler)){
                         element.eventHandler.forEach(item => {
                             container.addEventListener(item.eventType, item.handler);
                         });
 
                     }
+                    if(element.eventHandler && !Array.isArray(element.eventHandler)){
+                        console.log("test");
+                        Object.keys(element.eventHandler).forEach(eventType => {
+                            container.addEventListener(eventType, element.eventHandler[eventType]);
+                        });
+                    }
+
+                    // if(element.eventHandler) {
+                    //     Object.keys(element.eventHandler).forEach(eventType => {
+                    //         container.addEventListener(eventType, element.eventHandler[eventType]);
+                    //     });
+                    // }
+
                     if(element.children){
                         element.children.forEach(el => {
                             const htmlElement = this._vDomPrototypeElementToHtmlElement(el);
