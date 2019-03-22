@@ -4,13 +4,11 @@ import {CurrentWeather} from "../CurrentWeather/";
 import {WeatherForecast} from "../WeatherForecast";
 import {Footer} from "../Footer";
 import WeatherDataService from "../../../Services/WeatherDataService";
-import AppState from "../../Services/AppState";
 
 class App extends Component {
     constructor(host, props) {
         super(host, props);
         this.props = props;
-
     }
 
     componentWillMount() {
@@ -48,7 +46,6 @@ class App extends Component {
         } else {
             this.updateState({...weatherData, isLiked: this.isLiked()});
         }
-        console.log("this.state.history", this.state.history);
         this.persistHistoryToLocalStorage();
     }
 

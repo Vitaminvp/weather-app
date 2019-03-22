@@ -19,6 +19,7 @@ class UnitSelect extends Component {
         return [
             {
                 tag: 'label',
+                classList: 'search__units_label',
                 attributes: [
                     {name: 'for', value: 'units'},
                 ],

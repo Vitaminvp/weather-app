@@ -87,8 +87,6 @@ class FavouriteLocations extends Component {
                                 })
                             })
                             :[],
-
-
                     },
                 ]
             },

@@ -1,5 +1,4 @@
 import {Component} from "../../framework/";
-import ComponentFactory from "../../framework/ComponentFactory";
 import {WeatherForecastItem} from "./WeatherForecastItem";
 
 class WeatherForecast extends Component {
@@ -49,6 +48,5 @@ class WeatherForecast extends Component {
     }
 }
 
-//ComponentFactory.register(WeatherForecast);
 
 export default WeatherForecast;

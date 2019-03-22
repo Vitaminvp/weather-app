@@ -21,7 +21,7 @@ class WeatherDataService {
 
     getWeather(URL, query = ['Kiev', 'UA'], units = 'metric') {
         const city = query[0];
-        const code = query[1];
+        const code = query[query.length-1];
         const url = `${URL}?q=${city}${code ? `,${code}` : ''}&appid=${KEY}&units=${units}`;
         return this._getData(url);
     }

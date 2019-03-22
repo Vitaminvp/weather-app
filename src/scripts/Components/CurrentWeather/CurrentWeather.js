@@ -5,7 +5,6 @@ class CurrentWeather extends Component{
     constructor(host, props) {
         super(host, props);
     }
-
     render() {
         const { dt, name, sys, wind, main, weather, unit} = this.props;
         return [
