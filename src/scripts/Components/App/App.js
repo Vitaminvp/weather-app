@@ -80,8 +80,10 @@ class App extends Component {
     }
 
     isLiked(currentValue) {
-        return this.state.likes.some(item => currentValue.id === item.id);
-        console.log("localStorageFavourites", localStorageFavourites);
+        if(currentValue){
+            return this.state.likes.some(item => currentValue.id === item.id);
+        }
+        return false;
     }
 
     handleItemClick(e) {
